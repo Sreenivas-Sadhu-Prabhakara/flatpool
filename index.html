@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/flatpool/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Split your housing society's monthly maintenance across flats by square feet, equal, or custom shares. Exact per-flat dues that always add up to the bill — a free, private, offline calculator. This demo stores nothing.">
+
+  <meta property="og:title" content="Society Maintenance Calculation Per Sq Ft — flatpool">
+  <meta property="og:description" content="Apportion society maintenance across flats by sq ft, equal, or custom. Per-flat dues that reconcile to the paisa. Free and private.">
+  <meta property="og:type" content="website">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="flatpool">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>Society Maintenance Calculation Per Sq Ft — flatpool</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    :root { color-scheme: light dark; }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    #seo-landing { max-width: 760px; margin: 0 auto; padding: 24px 20px 8px; line-height: 1.5;
+      color: #26211e; background: #faf8f6; }
+    #seo-landing h1 { font-size: 1.5rem; color: #9e3b2b; margin: 0 0 8px; }
+    #seo-landing h2 { font-size: 1.05rem; margin: 20px 0 6px; }
+    #seo-landing code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px; }
+    #flutter-app { height: 78vh; min-height: 460px; border-top: 3px solid #9e3b2b; }
+    @media (prefers-color-scheme: dark) {
+      #seo-landing { color: #ede9e5; background: #211e1b; }
+      #seo-landing h1 { color: #e89b84; }
+      #seo-landing code { background: rgba(255,255,255,0.12); }
+    }
+  </style>
+
+  <!-- Crawlable structured data: the Flutter canvas is not indexable, so the
+       facts live in real HTML + JSON-LD. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "flatpool",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web, Windows, macOS, Linux, Android, iOS",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "description": "Apportion a housing society's maintenance budget across flats by square feet, equal, or custom shares, with per-flat dues that reconcile exactly to the bill."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is society maintenance calculated per square foot?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the total monthly maintenance budget by each flat's area divided by the total area of all flats. flatpool does this and uses a largest-remainder step so every flat's rounded share still adds up to the exact budget — no paisa is lost or created." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I split maintenance equally instead of by area?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. flatpool supports three bases: by square feet, equal per flat, or a custom weight you set per flat. You pick the basis per bill." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does flatpool include GST or interest?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Tax and interest rules vary by society and state, so flatpool never assumes them — you enter any tax or interest as a plain amount. It computes the apportionment only." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my society's data private?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The full app is local-first: your data lives in a SQLite file on your own machine and the app runs on localhost. This web demo stores nothing on any server — everything you type stays in your browser tab." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <main id="seo-landing">
+    <h1>Society Maintenance Calculation Per Sq&nbsp;Ft</h1>
+    <p><strong>flatpool</strong> splits a housing society's monthly maintenance
+    across every flat — by square feet, equally, or by a custom share — and gives
+    you per-flat dues that <strong>add up to the bill exactly</strong>. Free,
+    private, and offline: the full app keeps your data in a SQLite file on your own
+    machine, and this demo stores nothing.</p>
+
+    <h2>How the per-sq-ft split works</h2>
+    <p>Each flat pays the total budget times its area divided by the total area.
+    Example: a <code>₹30,000</code> bill across flats of <code>1200</code>,
+    <code>800</code> and <code>1000</code> sq ft is split
+    <code>₹12,000 / ₹8,000 / ₹10,000</code>. Rounded shares are reconciled with a
+    largest-remainder step so the parts always sum back to <code>₹30,000</code>.</p>
+
+    <h2>Three ways to split</h2>
+    <p>By <strong>square feet</strong> (area-weighted), <strong>equal</strong> per
+    flat, or a <strong>custom</strong> weight you set per flat — chosen per bill.
+    GST and interest are never assumed; enter any such amount yourself.</p>
+
+    <h2>Try it below</h2>
+    <p>The calculator below is loaded with a sample society. Edit it or add your
+    own — nothing you type leaves this page.</p>
+  </main>
+
+  <div id="flutter-app"></div>
+
+  <script src="flutter.js" defer></script>
+  <script>
+    window.addEventListener('load', function () {
+      _flutter.loader.load({
+        onEntrypointLoaded: async function (engineInitializer) {
+          const appRunner = await engineInitializer.initializeEngine({
+            hostElement: document.getElementById('flutter-app')
+          });
+          await appRunner.runApp();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
